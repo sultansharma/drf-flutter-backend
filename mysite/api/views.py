@@ -25,13 +25,13 @@ class HelloView(APIView):
             'LastName': user.last_name
         
         }
-        return Response(content)
+        return JsonResponse(content)
 
 class UsersList(APIView):
     def get(self, format=None):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+        return JsonResponse(serializer.data)
 
 class Register(APIView):
 
@@ -39,11 +39,11 @@ class Register(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid(raise_exception=ValueError):
             serializer.create(validated_data=request.data)
-            return Response(
+            return JsonResponse(
                 serializer.data,
                 status=status.HTTP_201_CREATED
             )
-        return Response(
+        return JsonResponse(
             {
                 "error": True,
                 "error_msg": 'serializer.error_messages',
