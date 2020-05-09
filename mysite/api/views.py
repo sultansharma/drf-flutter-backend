@@ -31,7 +31,8 @@ class UsersList(APIView):
     def get(self, format=None):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
-        return JsonResponse(serializer.data)
+        users_list = list(serializer.data)
+        return JsonResponse(users_list, safe=False)
 
 class Register(APIView):
 
